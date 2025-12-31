@@ -7,6 +7,9 @@ class Rating {
   // метод перевращения json в map
 
   factory Rating.fromJson(Map<String, dynamic> json) {
-    return Rating(rate: json['rate' as num].toDouble, count: json['count']);
+    return Rating(
+      rate: (json['rate'] as num).toDouble(),
+      count: json['count'] as int,
+    );
   }
 }
