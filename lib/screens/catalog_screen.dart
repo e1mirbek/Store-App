@@ -1,5 +1,6 @@
 import 'package:ema_store/models/product.dart';
 import 'package:ema_store/providers/product_provider.dart';
+import 'package:ema_store/screens/cart_screen.dart';
 import 'package:ema_store/theme/app_colors.dart';
 import 'package:ema_store/widgets/catalog_header.dart';
 import 'package:ema_store/widgets/app_button.dart';
@@ -16,12 +17,12 @@ class CatalogScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackround,
-      appBar: _appBar(),
+      appBar: _appBar(context),
       body: SafeArea(child: _buildBody(providerProvider)),
     );
   }
 
-  PreferredSizeWidget _appBar() {
+  PreferredSizeWidget _appBar(BuildContext context) {
     return AppBar(
       backgroundColor: AppColors.appBarBackround,
       title: Text(
@@ -37,7 +38,10 @@ class CatalogScreen extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: IconButton(
-            onPressed: () {},
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const CartScreen()),
+            ),
             icon: Icon(Icons.shopping_cart_outlined, size: 30.0),
           ),
         ),
