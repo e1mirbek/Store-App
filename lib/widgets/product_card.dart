@@ -56,7 +56,11 @@ class ProductCard extends StatelessWidget {
             const SizedBox(height: 20.0),
             Text("\$${product.price}", style: AppTextStyles.priceTextStyle),
             const SizedBox(height: 10.0),
-            AppButton(title: "В корзину", onPressed: () {}),
+            AppButton(
+              title: "В корзину",
+              // добавление товара в корзину
+              onPressed: () {},
+            ),
           ],
         ),
       ),
