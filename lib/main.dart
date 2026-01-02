@@ -1,3 +1,4 @@
+import 'package:ema_store/providers/cart_provider.dart';
 import 'package:ema_store/providers/product_provider.dart';
 import 'package:ema_store/screens/catalog_screen.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (context) => CartProvider()),
         ChangeNotifierProvider(
           create: (context) => ProductProvider()..loadProducts(),
         ),
