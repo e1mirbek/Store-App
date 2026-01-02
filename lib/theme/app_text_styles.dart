@@ -14,7 +14,12 @@ class AppTextStyles {
   );
   static const TextStyle categoryTextStyle = TextStyle(
     color: AppColors.mainTextColor,
-    fontSize: 15.0,
+    fontSize: 13.0,
+    fontWeight: FontWeight.bold,
+  );
+  static const TextStyle cartCategoryTextStyles = TextStyle(
+    color: Colors.grey,
+    fontSize: 13.0,
     fontWeight: FontWeight.w700,
   );
   static const TextStyle descriptionTextStyle = TextStyle(
