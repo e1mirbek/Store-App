@@ -29,7 +29,7 @@ class ProductCard extends StatelessWidget {
             ),
             const SizedBox(height: 20.0),
             Text(
-              product.category,
+              product.category.toUpperCase(),
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.categoryTextStyle,
             ),
