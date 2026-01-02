@@ -2,6 +2,16 @@ import 'package:ema_store/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AppTextStyles {
+  static const TextStyle mainTextStyles = TextStyle(
+    fontSize: 25.0,
+    fontWeight: FontWeight.bold,
+    color: AppColors.secondaryTextColor,
+  );
+  static const TextStyle secondaryTextStyles = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w500,
+    color: AppColors.descriptionColor,
+  );
   static const TextStyle categoryTextStyle = TextStyle(
     color: AppColors.mainTextColor,
     fontSize: 15.0,

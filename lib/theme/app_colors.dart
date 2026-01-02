@@ -11,4 +11,6 @@ class AppColors {
 
   static const buttonBackround = Color.fromRGBO(32, 100, 230, 1.0);
   static const buttonTextColor = Colors.white;
+
+  static const Color iconColor = Color.fromRGBO(228, 230, 234, 1.0);
 }
