@@ -4,7 +4,7 @@ class CartItem {
   final ProductModel product;
   int quantity; // количество
 
-  CartItem({required this.product, required this.quantity});
+  CartItem({required this.product, this.quantity = 1});
 
   // цена - кол-во
   // total - общий
