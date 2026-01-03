@@ -8,7 +8,7 @@ class AppTextStyles {
     color: AppColors.secondaryTextColor,
   );
   static const TextStyle secondaryTextStyles = TextStyle(
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: FontWeight.w500,
     color: AppColors.descriptionColor,
   );

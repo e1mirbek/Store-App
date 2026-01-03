@@ -1,14 +1,26 @@
-import 'package:ema_store/models/product.dart';
+import 'package:ema_store/models/cart_item.dart';
+import 'package:ema_store/providers/cart_provider.dart';
 import 'package:ema_store/theme/app_colors.dart';
 import 'package:ema_store/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CartProductCard extends StatelessWidget {
-  final ProductModel product;
-  const CartProductCard({super.key, required this.product});
+  final CartItem cartItem;
+  final VoidCallback onPlus;
+  final VoidCallback onMinus;
+  final VoidCallback onDelete;
+  const CartProductCard({
+    super.key,
+    required this.cartItem,
+    required this.onPlus,
+    required this.onMinus,
+    required this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final product = cartItem.products;
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8.0),
       padding: EdgeInsets.all(12),
@@ -38,11 +50,14 @@ class CartProductCard extends StatelessWidget {
                   const SizedBox(height: 10.0),
                   Row(
                     children: [
-                      _buildQtyButton("-", () {}),
+                      _buildQtyButton("-", onMinus),
                       const SizedBox(width: 20.0),
-                      Text("0", style: AppTextStyles.descriptionTextStyle),
+                      Text(
+                        "${cartItem.quantity}",
+                        style: AppTextStyles.descriptionTextStyle,
+                      ),
                       const SizedBox(width: 20.0),
-                      _buildQtyButton("+", () {}),
+                      _buildQtyButton("+", onPlus),
                     ],
                   ),
                 ],
@@ -51,11 +66,11 @@ class CartProductCard extends StatelessWidget {
           ),
           Column(
             children: [
-              Text("\$${product.price}", style: AppTextStyles.priceTextStyle),
+              Text("\$${cartItem.total}", style: AppTextStyles.priceTextStyle),
               const SizedBox(height: 10),
               // Иконка мусорки
               IconButton(
-                onPressed: () {},
+                onPressed: onDelete,
                 icon: const Icon(Icons.delete_outline, color: Colors.grey),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),

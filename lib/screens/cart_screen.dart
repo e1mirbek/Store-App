@@ -1,10 +1,11 @@
-import 'package:ema_store/models/product.dart';
-import 'package:ema_store/providers/product_provider.dart';
+import 'package:ema_store/models/cart_item.dart';
+import 'package:ema_store/providers/cart_provider.dart';
 import 'package:ema_store/theme/app_colors.dart';
 import 'package:ema_store/theme/app_text_styles.dart';
 import 'package:ema_store/widgets/app_button.dart';
 import 'package:ema_store/widgets/cart_product_card.dart';
 import 'package:ema_store/widgets/catalog_carts_header.dart';
+import 'package:ema_store/widgets/order_summary.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -13,20 +14,23 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productProvider = context.watch<ProductProvider>();
+    final cartProvider = context.watch<CartProvider>();
 
-    final products = productProvider.products;
+    final cartItems = cartProvider.items;
 
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackround,
       appBar: _appBar(context),
-      body: _buildBody(products),
-      // Center(
-      //   child: Padding(
-      //     padding: const EdgeInsets.all(20.0),
-      //     child: _emptyStateWidget(context),
-      //   ),
-      // ),
+
+      // проверка пуста ли корзина
+      body: cartItems.isEmpty
+          ? Center(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: _emptyStateWidget(context),
+              ),
+            )
+          : _buildBody(cartItems, cartProvider),
     );
   }
 
@@ -58,12 +62,16 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBody(List<ProductModel> products) {
+  Widget _buildBody(List<CartItem> items, CartProvider provider) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: SingleChildScrollView(
         child: Column(
-          children: [CatalogCartsHeader(), _buildCartProductListView(products)],
+          children: [
+            CatalogCartsHeader(),
+            _buildCartProductListView(items, provider),
+            OrderSummary(provider: provider),
+          ],
         ),
       ),
     );
@@ -112,14 +120,22 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCartProductListView(List<ProductModel> products) {
+  Widget _buildCartProductListView(
+    List<CartItem> items,
+    CartProvider cartProvider,
+  ) {
     return ListView.builder(
-      itemCount: products.length,
+      itemCount: items.length,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        final product = products[index];
-        return CartProductCard(product: product);
+        final item = items[index];
+        return CartProductCard(
+          cartItem: item, // передача весь обьект с корзином
+          onPlus: () => cartProvider.addToCart(item.products),
+          onMinus: () => cartProvider.decreaseQuantity(item),
+          onDelete: () {},
+        );
       },
     );
   }

@@ -1,8 +1,10 @@
 import 'package:ema_store/models/product.dart';
+import 'package:ema_store/providers/cart_provider.dart';
 import 'package:ema_store/theme/app_colors.dart';
 import 'package:ema_store/theme/app_text_styles.dart';
 import 'package:ema_store/widgets/app_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;
@@ -59,7 +61,16 @@ class ProductCard extends StatelessWidget {
             AppButton(
               title: "В корзину",
               // добавление товара в корзину
-              onPressed: () {},
+              onPressed: () {
+                context.read<CartProvider>().addToCart(product);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("${product.title} добавлен в корзину!"),
+                    duration: Duration(seconds: 3), // Исчезнет через 1 сек
+                    backgroundColor: Colors.green, // Можно настроить цвет
+                  ),
+                );
+              },
             ),
           ],
         ),

@@ -1,24 +1,37 @@
+import 'package:ema_store/models/cart_item.dart';
 import 'package:ema_store/models/product.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class CartProvider extends ChangeNotifier {
-  List<ProductModel> _cartItems = [];
+  final List<CartItem> _items = [];
 
-  // getter
+  List<CartItem> get items => _items;
 
-  List<ProductModel> get cartItems => _cartItems;
+  // add to cart
 
-  // метод добавление товара в корзину
+  void addToCart(ProductModel newProduct) {
+    int index = _items.indexWhere((item) => item.products.id == newProduct.id);
 
-  void addProductItem(ProductModel product) {
-    _cartItems.add(product);
+    if (index >= 0) {
+      _items[index].quantity++;
+    } else {
+      _items.add(CartItem(products: newProduct));
+    }
     notifyListeners();
   }
 
-  // метод удаление товара из корзины
-
-  void removeFromCart(ProductModel product) {
-    _cartItems.remove(product);
+  void decreaseQuantity(CartItem item) {
+    if (item.quantity > 1) {
+      item.quantity--;
+    } else {
+      return;
+    }
     notifyListeners();
+  }
+
+  // Общая стоимость всей корзины
+
+  double get totalPrice {
+    return _items.fold(0, (sum, item) => sum + item.total);
   }
 }

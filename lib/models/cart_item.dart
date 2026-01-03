@@ -1,15 +1,10 @@
 import 'package:ema_store/models/product.dart';
 
 class CartItem {
-  final ProductModel product;
+  final ProductModel products;
   int quantity; // количество
 
-  CartItem({required this.product, this.quantity = 1});
+  CartItem({required this.products, this.quantity = 1});
 
-  // цена - кол-во
-  // total - общий
-
-  // Getter - для подсчета
-
-  double get total => quantity * product.price;
+  double get total => quantity * products.price;
 }
