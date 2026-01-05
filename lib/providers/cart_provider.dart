@@ -29,6 +29,13 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // remove all cards products
+
+  void removeAllCardsProducts(CartItem item) {
+    _items.remove(item);
+    notifyListeners();
+  }
+
   // Общая стоимость всей корзины
 
   double get totalPrice {
