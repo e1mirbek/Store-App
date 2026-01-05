@@ -63,7 +63,12 @@ class OrderSummary extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 15.0),
-          AppButton(title: "Оформить заказ", onPressed: () {}),
+          AppButton(
+            title: "Оформить заказ",
+            onPressed: () {},
+            backgroundColor: AppColors.buttonBackround,
+            foregroundColor: AppColors.buttonTextColor,
+          ),
           const SizedBox(height: 15.0),
           Center(
             child: Text(

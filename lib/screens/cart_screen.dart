@@ -12,6 +12,57 @@ import 'package:provider/provider.dart';
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
+  void _showDeleteConfirmation(
+    BuildContext context,
+    CartProvider provider, {
+    required String title,
+    required void Function()? onPressed,
+  }) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          scrollable: true,
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 20.0,
+            vertical: 20.0,
+          ),
+          backgroundColor: AppColors.scaffoldBackround,
+          title: Text(title),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
+              Row(
+                children: [
+                  Expanded(
+                    child: AppButton(
+                      title: "Нет",
+                      onPressed: () => Navigator.pop(context),
+                      backgroundColor: AppColors.scaffoldBackround,
+                      foregroundColor: Colors.red,
+                    ),
+                  ),
+                  const SizedBox(width: 5.0),
+                  Expanded(
+                    child: AppButton(
+                      title: "Да",
+                      onPressed: onPressed,
+                      backgroundColor: AppColors.buttonBackround,
+                      foregroundColor: AppColors.buttonTextColor,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final cartProvider = context.watch<CartProvider>();
@@ -30,7 +81,7 @@ class CartScreen extends StatelessWidget {
                 child: _emptyStateWidget(context),
               ),
             )
-          : _buildBody(cartItems, cartProvider),
+          : _buildBody(cartItems, cartProvider, context),
     );
   }
 
@@ -62,13 +113,29 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBody(List<CartItem> items, CartProvider provider) {
+  Widget _buildBody(
+    List<CartItem> items,
+    CartProvider provider,
+    BuildContext context,
+  ) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: SingleChildScrollView(
         child: Column(
           children: [
-            CatalogCartsHeader(),
+            CatalogCartsHeader(
+              catalogMainText: 'Корзина',
+              clearCartText: 'Очистить все',
+              onTap: () => _showDeleteConfirmation(
+                context,
+                provider,
+                title: "Вы действительно хотите удалить ? ",
+                onPressed: () {
+                  provider.cartsClear();
+                  Navigator.pop(context);
+                },
+              ),
+            ),
             _buildCartProductListView(items, provider),
             OrderSummary(provider: provider),
           ],
@@ -109,6 +176,8 @@ class CartScreen extends StatelessWidget {
                   AppButton(
                     title: "Перейти к покупкам",
                     onPressed: () => Navigator.pop(context),
+                    backgroundColor: AppColors.buttonBackround,
+                    foregroundColor: AppColors.buttonTextColor,
                   ),
                   const Spacer(),
                 ],
@@ -134,7 +203,15 @@ class CartScreen extends StatelessWidget {
           cartItem: item, // передача весь обьект с корзином
           onPlus: () => cartProvider.addToCart(item.products),
           onMinus: () => cartProvider.decreaseQuantity(item),
-          onDelete: () {},
+          onDelete: () => _showDeleteConfirmation(
+            context,
+            cartProvider,
+            title: "Вы действительно хотите удалить товар ? ",
+            onPressed: () {
+              cartProvider.deleteFromCarts(item);
+              Navigator.pop(context);
+            },
+          ),
         );
       },
     );

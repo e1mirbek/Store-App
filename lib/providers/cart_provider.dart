@@ -33,11 +33,12 @@ class CartProvider extends ChangeNotifier {
 
   void deleteFromCarts(CartItem item) {
     _items.remove(item);
+    notifyListeners();
   }
 
   // clear all cards products
 
-  void cartsClear(CartItem item) {
+  void cartsClear() {
     _items.clear();
     notifyListeners();
   }

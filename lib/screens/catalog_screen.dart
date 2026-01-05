@@ -80,6 +80,8 @@ class CatalogScreen extends StatelessWidget {
               AppButton(
                 title: "Повторить попытку",
                 onPressed: () => provider.loadProducts(),
+                backgroundColor: AppColors.buttonBackround,
+                foregroundColor: AppColors.buttonTextColor,
               ),
             ],
           ),

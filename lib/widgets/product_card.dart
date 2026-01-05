@@ -70,7 +70,7 @@ class ProductCard extends StatelessWidget {
                     backgroundColor: Colors.green, // Можно настроить цвет
                   ),
                 );
-              },
+              }, backgroundColor: AppColors.buttonBackround, foregroundColor: AppColors.buttonTextColor,
             ),
           ],
         ),

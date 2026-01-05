@@ -3,9 +3,17 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
 class AppButton extends StatelessWidget {
+  final Color backgroundColor;
+  final Color foregroundColor;
   final String title;
   final void Function()? onPressed;
-  const AppButton({super.key, required this.title, required this.onPressed});
+  const AppButton({
+    super.key,
+    required this.title,
+    required this.onPressed,
+    required this.backgroundColor,
+    required this.foregroundColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +23,8 @@ class AppButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        backgroundColor: AppColors.buttonBackround,
-        foregroundColor: AppColors.buttonTextColor,
+        backgroundColor: backgroundColor,
+        foregroundColor: foregroundColor,
       ),
       child: Center(
         child: Text(
@@ -27,3 +35,6 @@ class AppButton extends StatelessWidget {
     );
   }
 }
+
+//         backgroundColor: AppColors.buttonBackround,
+//         foregroundColor: AppColors.buttonTextColor,
